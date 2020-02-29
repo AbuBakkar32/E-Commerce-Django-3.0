@@ -1,0 +1,26 @@
+
+{% if shipping_address_qs.exists %}
+<form action="{{ action_url }}" method="POST">{% csrf_token %}
+    {% if next_url %}
+    <input type="hidden" name="next" value="{{ next_url }}">
+    {% endif %}
+
+    <!-- {% if address_type %}
+    <input type="hidden" name="address_type" value="{{ address_type }}">
+    {% endif %} -->
+
+    {% for address in address_qs %}
+    <!-- <label for="address-{{ address.id }}">
+        <input id="{{ address.id }}" type="radio" name="address" value="{{ address.id }}">
+        {{ address.address_line_1 }}
+    </label><br> -->
+
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="{{ address.id }}" name="address" value="{{ address.id }}" class="custom-control-input">
+        <label class="custom-control-label" for="{{ address.id }}">{{ address.address_line_1 }}</label>
+    </div><br><br>
+    {% endfor %}
+    <button type="submit" class="btn btn-warning" style="background: #F57C00;">Continue</button>
+</form>
+
+{% endif %}

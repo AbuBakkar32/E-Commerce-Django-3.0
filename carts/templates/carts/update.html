@@ -1,0 +1,22 @@
+
+
+
+<form action="{% url 'carts:update' %}" class="cart-update-ajax">
+    {% csrf_token %}
+  
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <div class="submit-span">
+    {% if cart_item in cart.cartitem_set.all %}
+      <input type="hidden" name="qty" value="0">
+      <button type="submit" class="btn btn-warning" style="margin-left:0px;background:#F57C00;">Remove from cart</button>
+    {% else %}
+      <button type='submit' class="btn btn-warning" style="background:#F57C00;" >Add To Cart</button>
+    {% endif %}
+  </div>
+  
+  </form>
+
+
+
+
+

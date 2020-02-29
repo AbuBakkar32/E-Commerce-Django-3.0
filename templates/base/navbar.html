@@ -1,0 +1,83 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse ml-2" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="{% url 'home' %}"><span style="font-family: 'Pacifico', cursive;color:#F57C00">D</span>epnox</a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
+          <li class="nav-item">
+            <div class="dropdown">
+              <a href="{% url 'category:list' %}" {% if "category" in request.path %}class="nav-link active"
+                {% else %}class="nav-link" {% endif %}>Department <i class="fa fa-caret-down"></i></a>
+              <div class="dropdown-content">
+                {% for department in category_qs %}
+                <a href="{% url 'category:detail' pk=department.pk %}">{{ department.name }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </li>
+          <li {% if "contact" in request.path %}class="nav-item active" {% else %}class="nav-item" {% endif %}>
+            <a class="nav-link" href="{% url 'contact' %}">Contact us</a>
+          </li>
+          <li {% if "about" in request.path %}class="nav-item active" {% else %}class="nav-item" {% endif %}>
+              <a class="nav-link" href="{% url 'about' %}">About us</a>
+            </li>
+        </ul>
+      <ul class="navbar-nav" style="margin-right: 100px;">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <div class="dropdown">
+                    <a href="" {% if "category" in request.path %}class="nav-link active"
+                      {% else %}class="nav-link" {% endif %}>Account <i class="fa fa-caret-down"></i></a>
+
+                    <div class="dropdown-content">
+                      <a href="{% url 'accounts:profile_detail' %}">My Account</a>
+                      <a href="{% url 'accounts:order-list' %}">My Orders</a>
+                      <a href="{% url 'accounts:account_settings' %}">Settings</a><hr>
+                      <a href="{% url 'accounts:logout' %}">Sign out</a>
+                    </div>
+                  </div>
+                </li>
+
+                {% else %}
+                <li {% if "login" in request.path %}class="nav-item active" {% else %}class="nav-item" {% endif %}>
+                  <a class="nav-link" href="{% url 'accounts:login' %}">Sign In</a>
+                </li>
+                <!-- <li {% if "register" in request.path %}class="nav-item active" {% else %}class="nav-item" {% endif %}>
+                  <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                </li> -->
+                {% endif %}
+    
+                <li {% if "carts" in request.path %}class="nav-item active" {% else %}class="nav-item" {% endif %}>
+                  <a class="nav-link" href="{% url 'carts:home' %}">
+                    <span class="badge badge-warning nav-cart-count" style="position:absolute;margin-left:15px;background:#F57C00;">{{ request.session.cart_total }}</span>
+                    <img style="height:23px;"src="https://img.icons8.com/dusk/64/000000/shopping-cart.png">
+                  </a>
+                </li>
+              </ul>
+              
+      <form class="form-inline my-2 my-lg-0" action="{% url 'search:search' %}">
+          <select name="c_base_q" id="search-category-select"class="form-control">
+              <option selected="true" disabled="disabled" >All(category)</option>
+              {% for department in category_qs %}
+                  <option value="{{ department }}" 
+                  {% if department.name == request.GET.c_base_q %}
+                      selected
+                  {% endif %} 
+                  >{{ department }}</option>
+              {% endfor %}
+          </select>
+        <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+      
+    </div>
+
+
+  </nav>
+

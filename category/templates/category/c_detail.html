@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="" id="left-column">
+                <span>Featured Categories</span><br>
+                {% if category.subcategory_set.all %}
+                {% for brand in category.subcategory_set.all %}
+                <a href="#{{ brand.name }}">{{ brand.name }}</a><br>
+                {% endfor %}
+                {% else %}
+                <p>Not found</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <span style="width: 1px; background-color: #C8CCCF; margin-top:10px;"></span>
+
+        <div class="col-md-9">
+
+            <div class="category-title">
+                <div id="sub-c-title">{{ category.name }}</div>
+                <p>Shop your favourite branding item.</p>
+                <div id='underline'></div>
+            </div>
+
+            <div id="category-detail-product">
+                {% if category.subcategory_set.all %}
+                {% for brand in category.subcategory_set.all %}
+                <div id="{{ brand.name }}">
+                    <h1>{{ brand.name }}</h1>
+                    <div id="title-underline"></div>
+                    <div class="product-cat">
+                        <div class="row">
+                            {% for product in brand.product_set.all %}
+                            <div class="col-md-3 col-sm-12">
+                                <div class="card product-list" style="width: 210px; height: 280px;">
+                                    <div class="content">
+                                        {% thumbnail product.image_main "208x170" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        {% endthumbnail %}
+                                        <div class="card-body">
+                                            <h5 class="category-card-title">{{ product.title|title }}</h5>
+                                            <hr>
+                                            <p class="card-price">{{ product.price }} Tk.</p>
+                                        </div>
+                                    </div>
+                                    <div class="cart-button">
+                                            <!-- <a href="{% url 'carts:update' %}?product_id={{ product.id }}" class="btn btn-warning" style="background:#fd7e14;color:white;">Add To Cart</a> -->
+                                            {% include 'carts/update.html' %}
+                                    </div>
+                                    <div class="view-button">
+                                        <a href="{% url 'products:detail' slug=product.slug %}"
+                                            class="btn btn-block btn-dark"
+                                            style="width:208px;border-radius:0px;">Product Detail</a>
+                                    </div>
+                                </div><br>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div> <br><br>
+                {% endfor %}
+                {% else %}
+                <p>Not found any product</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

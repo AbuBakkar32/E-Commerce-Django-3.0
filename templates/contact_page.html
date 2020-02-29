@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ block.super }}-Contact{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card" style="width:30rem;">
+                <div class="card-body">
+                    <!-- Header section -->
+                    <span style="font-size:24px;line-height: 0px;">Contact Page</span>
+                    <hr>
+                    <!-- Messages section -->
+                    <div class="contact-messages">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            <strong>{{ message.tags|title }}!</strong>{{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <!-- Contact form section -->
+                    <form action="" method='POST'>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button class="btn btn-default btn-block" style="background-color:#F57C00;border-top:1px solid black;border-bottom:1px solid black;" type='submit'>Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br><br>
+{% endblock content %}

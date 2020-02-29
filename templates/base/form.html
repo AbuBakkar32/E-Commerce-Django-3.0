@@ -1,0 +1,17 @@
+<!-- category base SEarch form  -->
+<form class="form-inline searchForm" action="{% url 'search:search' %}">
+    <select name="c_base_q" id="search-category-select">
+        <option selected="true" disabled="disabled" >All(category)</option>
+        {% for department in category_qs %}
+            <option value="{{ department }}" 
+            {% if department.name == request.GET.c_base_q %}
+                selected
+            {% endif %} 
+            >{{ department }}</option>
+        {% endfor %}
+    </select>
+    <input type="search" name='q' placeholder="Search" value="{{ request.GET.q }}">
+    <button class="btn btn-default" style="background:#F57C00;" type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ block.super }}-settings{% endblock title %}
+{% block content %}
+
+<div class="container mt-3">
+
+    <section class="blok">
+        <div class="blok-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="shadow-sm p-3 mb-5 bg-white rounded" style="height: 300px;width:250px;">
+                        <ul class="nav tab-menu nav-pills nav-stacked pr15 btn-group-vertical">
+                            <li class="active" style='color:white;'><a href="#home" data-toggle="tab"
+                                    class="btn btn-outline-primary  settings-btn">Account</a></li>
+                            <li><a href="#messages" data-toggle="tab"
+                                    class="btn btn-outline-primary  settings-btn">Reset Password</a></li>
+                            <li><a href="#settings" data-toggle="tab"
+                                    class="btn btn-outline-primary  settings-btn">Payment Method</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Settings
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane well active in active" id="home">
+                                    <form action="{% url 'accounts:account_settings' %}" method="POST"
+                                        style="float:left; min-width: 300px; text-align: left;"
+                                        enctype="multipart/form-data">{% csrf_token %}
+                                        {{ user_form|crispy }}
+                                        {{ profile_form|crispy }}
+
+                                        <button class="btn btn-primary">Update</button>
+                                    </form>
+
+                                </div>
+
+                                <div class="tab-pane well fade" id="messages" style="float:left;text-align: left;;">
+                                    <form action="{% url 'password_change' %}" method='POST'>
+                                        <form method="post" action="">
+                                            {% csrf_token %}
+                                            <p><label for="id_old_password">Old password:</label> <input type="password"
+                                                    name="old_password" autofocus="" required="" id="id_old_password">
+                                            </p>
+                                            <p><label for="id_new_password1">New password:</label> <input
+                                                    type="password" name="new_password1" required=""
+                                                    id="id_new_password1"> <span class="helptext"></span></p>
+                                            <ul>
+                                                <li>Your password can't be too similar to your other personal
+                                                    information.</li>
+                                                <li>Your password must contain at least 8 characters.</li>
+                                                <li>Your password can't be a commonly used password.</li>
+                                                <li>Your password can't be entirely numeric.</li>
+                                            </ul>
+                                            <p></p>
+                                            <p><label for="id_new_password2">New password confirmation:</label> <input
+                                                    type="password" name="new_password2" required=""
+                                                    id="id_new_password2"></p>
+                                            <span style="margin-bottom: 12px;"></span>
+                                            <button type="submit" class="btn btn-block btn-info">Change Pasword</button>
+                                        </form>
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane well fade" id="settings" style="text-align: left;">
+                                    {% if has_card %}
+                                    <p style='font-size:18px;color:grey;font-weight:600;'>Your Default Payment
+                                        Method:<span style="margin-left: 20px;">{{ billing_obj.default_card }}</span></p>
+                                    
+                                    <a href="{{ billing_obj.get_payment_method }}">Change</a> payment method?
+                                    {% else %}
+                                    <p>Opps! No Card Added</p>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock content %}

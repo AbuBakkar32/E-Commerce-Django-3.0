@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }}-order-detail{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <div class="shadow p-3 mb-2 bg-white rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <sapn style="font-size:25px;color:#F57C00;font-weight:600;">Order List</sapn>
+            </div>
+            <div class="col-md-4 order-search">
+                <form action="" method='GET'>
+                    <input type="text" name="order_search" value="{{ request.GET.order_search }}" placeholder="Order ID" style="padding-left:2px;">
+                    <button type='submit' class="btn btn-default btn-sm" style="background:#F57C00; margin-bottom:3px;padding-left:2px;">Search</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Shipping Price</th>
+                    <th scope="col">Total Price</th>
+                </tr>
+            </thead>
+            {% for order in order_qs %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a class="link-a"
+                            href="{% url 'accounts:order-detail' order.order_id %}">{{ order.order_id }}</a></td>
+                    <td>{% if order.status == 'paid' %}
+                        shipping soon
+                        {% else %}
+                        {{ order.status }}
+                        {% endif %}
+                    </td>
+                    <td>{{ order.shipping_total }} Tk.</td>
+                    <td>{{ order.total }} Tk.</td>
+                </tr>
+                <!-- <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr> -->
+            </tbody>
+            {% empty %}
+            <p>Order not created</p>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock content %}

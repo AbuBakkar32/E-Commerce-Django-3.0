@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- title -->
+    <title>{% block title %}Depnox{% endblock title %}</title>
+
+    <!-- bootstrap css -->
+    {% include 'base/css.html' %}
+</head>
+
+<body>
+
+    <!-- Navbar section -->
+    {% include 'base/navbar.html' %}
+
+    <!-- Messages section-->
+    <div class="base-messages container mt-2" style="width: 450px;">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success mx-auto alert-message" role="alert">
+            <strong id='message-content'>{{ message }}</strong>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <!-- Content Section -->
+    {% block content %}{% endblock content %}
+
+
+    <!-- bootstrap js -->
+    {% include 'base/js.html' %}
+    
+    {% block javascript %}
+
+    {% endblock javascript %}
+
+
+
+    <footer>
+        <div class="text-center" style="height:50px;width:100%;background-color:#dcdcdc94;padding-top:20px;">
+            <p>Copyright © <span style="color:#F57C00;font-family: 'Pacifico', cursive;">D</span>epnox </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

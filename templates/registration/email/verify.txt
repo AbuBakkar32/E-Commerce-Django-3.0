@@ -1,0 +1,13 @@
+Hello, 
+
+Please activate your account for {{ email }} by clicking link bellow:
+
+
+{{ path }}
+
+
+Once you activate, You can shop and login!
+
+Thank you,
+Depnox community
+

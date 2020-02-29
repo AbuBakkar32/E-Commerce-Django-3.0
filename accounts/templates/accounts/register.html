@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ block.super }}-Register{% endblock title %}
+{% block content %}
+<div class="content-section container mt-3" >
+    <div class="card" style="width: 22rem;"id='register-section'>
+        <div class="card-body">
+            <form action="" method="POST" id='register-form'>
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Create Account</legend>
+                    {{ form|crispy }}
+                    <span id="passwordError"></span>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-block" id="account-create-btn">Create your depnox account</button>
+                </div>
+            </form>
+            <small><p class="text-muted">By creating an account, you agree to Depnox's <a href="{% url 'privacy_policy' %}" class='link-a'>Conditions of Use </a>and <a href="{% url 'privacy_policy' %}" class='link-a'>Privacy Notice</a>.</p></small>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Already have an Accouont?<a href="{% url 'accounts:login' %}" class='link-a'>Sign In</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

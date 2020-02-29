@@ -1,0 +1,256 @@
+
+/* Search form  */
+
+.searchForm{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.searchForm input[type='search']{
+    width: 600px;
+    height: 32px;
+    border: 2px solid #ffc107;
+    /* border-radius: 4px 0 0 4px; */
+    padding-left: 10px;
+    margin-left: 100px;
+}
+.searchForm button{
+    position: relative;
+    height: 32px;
+    padding: 0 12px 0 12px;
+    border-radius: 0 4px 4px 0;
+}
+
+.searchForm #search-category-select{
+  position: absolute;
+  border-radius: 4px 0 0 4px;
+  font-size: 11px;
+  display: block;
+  height: 32px;
+  cursor: pointer;
+  background: #ece3e3;
+}
+
+.searchForm #search-category-select{
+  border-top: 2px  solid #ffc107;
+  border-bottom: 2px  solid #ffc107;
+  border-left: 2px  solid #ffc107;
+}
+.searchForm #search-category-select option{
+  font-size: 14px;
+  background-color: white;
+}
+
+/* navbar */
+
+  /* nav-belt */
+  .nav-belt{
+    height: 35px;
+  }
+  .nav-belt .left-side{
+    color: white;
+  }
+  .nav-belt .left-side p a{
+    color:#fd7e14;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  .nav-belt .right-side{
+    color: white;
+    margin-top: 3px;
+  }
+  .nav-belt .right-side a{
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+  }
+
+  /* nav-main */
+    .nav-main{
+      color: white;
+      height: 35px;
+      font-size: 13px;
+    }
+
+    .nav-main .left-side p img{
+      height: 25px;
+      margin-left:2px;
+      margin-right: 5px;
+    }
+
+  .nav-main-separator{
+    background: white;
+    height: 25px;
+    width: 1px;
+    margin-top: 5px;
+  }
+
+
+
+/* dropdown */
+
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white; /*  #ffc107; */
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 3px;
+    padding: 8px 0 12px 0;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 2px 6px;
+    display: block;
+    padding-left: 18px;
+    font-size: 14px;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+      color: #fd7e14;
+    }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+
+
+/* Category  */
+ .category-card-title{
+   font-size: 18px;
+   font-weight: 400;
+   line-height: 3px;
+ }
+ #category-product-title{
+   color: #5d5454;
+   font-size: 12px;
+   line-height: 8px;
+   font-weight: 600;
+ }
+
+
+
+/* category detail  */
+#left-column{
+  position: fixed;
+  right: 0;
+  /* bottom:0px; */
+  left: 15px;
+  line-height: 20px;
+
+}
+
+#left-column a{
+  font-size: 13px;
+  color: #444C52;
+  margin-left: 25px;
+}
+
+.category-title #sub-c-title{
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.category-title p{
+  font-size: 13px;
+}
+
+.category-title #underline{
+  height: 5px;
+  background-color: #ffc107;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+#category-detail-product h1{
+  font-size: 20px;
+  color: grey;
+  font-weight: 500;
+}
+
+.product-cat{
+  margin-left: 15px;
+}
+
+/* #title-underline{
+  height: 2px;
+  width: 80px;
+  background-color: grey;
+} */
+
+
+
+/* Product detail  */
+#details h5{
+  font-size: 30px;
+  color: #ffc107;
+  font-weight: 700;
+  line-height: 5px;
+}
+
+#details .description{
+  font-size: 14px;
+  font-weight: 300;
+}
+
+#details #price{
+  font-size: 16px;
+  color: #ffc107;
+  font-weight: 700;
+  line-height: 5px;
+  margin-top: 40px;
+}
+
+#details #brand{
+  font-size: 16px;
+  color: #ffc107;
+  font-weight: 700;
+  line-height: 5px;
+}
+#details #stock{
+  font-size: 16px;
+  color: #ffc107;
+  font-weight: 700;
+  line-height: 5px;
+  margin-bottom: 40px;
+}
+
+#sideline{
+  width: 1px;
+  background-color: grey;
+}
+
+#detail-img-main{
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#detail-img-main:hover{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.img-main{
+  position: relative;
+}
+.topleft {
+  font-family: 'Pacifico', cursive;
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+  color: #ffc107;
+}
+

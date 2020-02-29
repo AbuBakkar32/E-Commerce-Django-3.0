@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }}-Checkout{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container mt-3" style="margin-bottom:90px;">
+
+    {% if not billing_profile %}
+    <div class="row text-center">
+
+        <div class="col-12 col-md-4">
+            <div class="card" style="width: 18rem;left:100px;">
+                <div class="card-body">
+                    <h3 class="text-muted">Continue as user</h3>
+                    <hr><br>
+                    {% include "accounts/snippets/form.html" with form=login_form next_url=request.build_absolute_uri %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2"></div>
+        <span class='billing-separator'></span>
+
+        <div class="col-12 col-md-4">
+            <div class="card" style="width: 18rem;left:150px;">
+                <div class="card-body">
+                    <h3 class="text-muted">Continue as guest</h3>
+                    <hr><br>
+                    {% url 'accounts:guest-register' as guest_register %}
+                    {% include "accounts/snippets/form.html" with form=guest_form next_url=request.build_absolute_uri action_url=guest_register %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+
+    {% if not object.shipping_address %}
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <h3 class='text-muted'>Shipping Address</h3>
+        <p class='text-muted' style="font-size:14px;">Please enter a shipping address for this order. Please also
+            indicate whether your billing address is the same as the shipping address entered. When finished, click the
+            "Continue" button.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="color:#F57C00;font-weight: 700;">Fill out your information</h5>
+                    {% url 'addresses:checkout_address_create' as checkout_address_create %}
+                    {% include "addresses/form.html" with form=shipping_address_form next_url=request.build_absolute_uri action_url=checkout_address_create %}
+                </div>
+            </div>
+        </div>
+        {% if shipping_address_qs %}
+        <div class="col-12 col-md-4 ">
+            <div class="card">
+                <div class="card-body">
+                    <p style="color:grey;font-size:13px;">This your old address that you use before.You can reuse.</p>
+                    {% url 'addresses:checkout_address_reuse' as checkout_address_reuse %}
+                    {% include "addresses/pre_addresses.html" with next_url=request.build_absolute_uri action_url=checkout_address_reuse address_qs=shipping_address_qs %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% else %}
+
+    {% if not has_card %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="shadow p-3 mb-3 bg-white rounded">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h3 style="color:#F57C00;">Payment Method</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <p class='text-muted' style="font-size:14px;">(Please select <strong>only one!</strong> payment
+                            method)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- cash on delivery  -->
+            <div class="shadow-sm p-3 mb-3 bg-white rounded payment-option1">
+                <div class="payment-header1 payment-section-underline">
+                    <img src="https://img.icons8.com/color/48/000000/cash-in-hand.png">
+                    <p style="font-weight:600;">Cash On Delivery</p>
+                </div>
+
+                <div id="payment-content1" style="display:none;margin-left:20px;" class="">
+                    <span style="font-size:20px;">Your Payable Amount: <strong>{{ object.total|floatformat:"0" }}
+                            Tk.</strong></span><br><br>
+                    <p style="color:grey;font-size:13px;"><img style="height:30px;margin-right:10px;"
+                            src="https://img.icons8.com/pastel-glyph/64/000000/speaker.png">Your order may not contain
+                        any products to the publisher / supplier. It would not be possible for us to give them away. In
+                        addition, in some cases the price may change for different reasons from the publisher /
+                        supplier. We apologize and apologize for these awkward things.</p>
+                    <br><br>
+                    <p style="font-size:12px;color:grey;">I agree to the <a href="" class="link-a">Terms of Use</a> and
+                        <a href="" class="link-a">Privacy Policy</a></p>
+
+                    <a href="" class='btn btn-dark' style="margin-left: 400px;">Continue to Cash on Delivery</a>
+                </div>
+            </div>
+            <!-- bkash  -->
+            <div class="shadow-sm p-3 mb-3 bg-white rounded payment-option2">
+                <div class="payment-header2">
+                    <img style="height:50px;" src="{% static 'static/img/payment/bKash.jpg' %}">
+                    <p style="font-weight:600;">bKash Payment</p>
+                </div>
+
+                <div id="payment-content2" style="display:none;margin-left:20px;">
+                    <span style="font-size:20px;">Your Payable Amount: <strong>{{ object.total|floatformat:"0" }}
+                            Tk.</strong></span><br><br>
+                    <p style="color:grey;font-size:13px;"><img style="height:30px;margin-right:10px;"
+                            src="https://img.icons8.com/pastel-glyph/64/000000/speaker.png">Your order may not contain
+                        any products to the publisher / supplier. It would not be possible for us to give them away. In
+                        addition, in some cases the price may change for different reasons from the publisher /
+                        supplier. We apologize and apologize for these awkward things.</p><br>
+
+                    <div class="b-system" style="color:#708090;font-size:14px;">
+                        **How To Pay<br>
+                        <ul>
+                            <li>Go to bKash Menu by dialing *247#</li>
+                            <li>Choose 'Payment' option by pressing '3'</li>
+                            <li>Enter our Merchant wallet number : 01xxx-xxxxxx</li>
+                            <li>Enter BDT. amount you have to pay : xxxx</li>
+                            <li>Enter a reference against your payment : xxxx</li>
+                            <li> Enter the counter number : 1</li>
+                            <li>Now enter your PIN to confirm: xxxx</li>
+                            <li>Done! You will get a confirmation SMS</li>
+                        </ul>
+                    </div>
+
+                    <br><br>
+                    <p style="font-size:12px;color:grey;">I agree to the <a href="" class="link-a">Terms of Use</a> and
+
+
+                    <a href="" class='btn btn-dark' style="margin-left: 400px;">Continue to bkash</a>
+                </div>
+            </div>
+            <!-- card  -->
+            <div class="shadow-sm p-3 mb-3 bg-white rounded payment-option3">
+                <div class="payment-header3">
+                    <img src="https://img.icons8.com/color/48/000000/visa.png">
+                    <img src="https://img.icons8.com/color/48/000000/mastercard.png">
+                    <img src="https://img.icons8.com/doodle/48/000000/bank-cards.png">
+                    <img src="https://img.icons8.com/color/48/000000/amex.png">
+                    <img src="https://img.icons8.com/ios-filled/48/000000/diners-club.png">
+                    <p style="font-weight:600;">Card Payment</p>
+                </div>
+
+                <div id="payment-content3" style="display:none;margin-left:20px;">
+                    <span style="font-size:20px;">Your Payable Amount: <strong>{{ object.total|floatformat:"0" }}
+                            Tk.</strong></span><br><br>
+                    <p style="color:grey;font-size:13px;"><img style="height:30px;margin-right:10px;"
+                            src="https://img.icons8.com/pastel-glyph/64/000000/speaker.png">Your order may not contain
+                        any products to the publisher / supplier. It would not be possible for us to give them away. In
+                        addition, in some cases the price may change for different reasons from the publisher /
+                        supplier. We apologize and apologize for these awkward things.</p><br>
+
+                    <div class="card-system" style="color:#708090;font-size:14px;">
+                        **How To Pay
+                        <ul>
+                            <li>Insert your "Account Name", "Card Number", "Expiration Date" and "CVV Number" .</li>
+                            <li>Click on "Submit Payment" .</li>
+                            <li>Now, Your Card will be Added..</li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <!-- payment method -->
+                    <div class="col-10 col-md-6">
+                        <div class="stripe-payment-form" data-token="{{ publish_key }}"
+                            data-next-url="{{ request.build_absolute_uri }}" data-btn-title="Submit Payment"></div>
+                    </div>
+
+                    <br><br>
+                    <p style="font-size:12px;color:grey;">I agree to the <a href="" class="link-a">Terms of Use</a> and
+                        <a href="" class="link-a">Privacy Policy</a></p>
+
+                    
+                </div>
+            </div>
+            <!-- rocket  -->
+            <div class="shadow-sm p-3 mb-3 bg-white rounded payment-option4">
+                <div class="payment-header4">
+                    <img style="height:50px;" src="{% static 'static/img/payment/rocket.png' %}">
+                    <p style="font-weight:600;">Rocket Payment</p>
+                </div>
+
+                <div id="payment-content4" style="display:none;margin-left:20px;">
+                    <span style="font-size:20px;">Your Payable Amount: <strong>{{ object.total|floatformat:"0" }}
+                            Tk.</strong></span><br><br>
+                    <p style="color:grey;font-size:13px;"><img style="height:30px;margin-right:10px;"
+                            src="https://img.icons8.com/pastel-glyph/64/000000/speaker.png">Your order may not contain
+                        any products to the publisher / supplier. It would not be possible for us to give them away. In
+                        addition, in some cases the price may change for different reasons from the publisher /
+                        supplier. We apologize and apologize for these awkward things.</p><br>
+
+                    <div class="rocket-system" style="color:#708090;font-size:14px;">
+                        **How To Pay<br>
+                        <ul>
+                            <li>Go to your DBBL Mobile Menu by dialing *322#</li>
+                            <li>Choose “Merchant Pay by press 8”</li>
+                            <li>Enter our Merchant Rocket Account Number 01xxx-xxxxxx</li>
+                            <li>Enter "INVOICE NUMBER" as reference.</li>
+                            <li>Enter a reference against your payment : xxxx</li>
+                            <li>Now enter your DBBL Rocket Mobile Menu PIN to confirm</li>
+                            <li>Done! You will receive a confirmation message from DBBL Rocket with Transaction ID.</li>
+                        </ul>
+                    </div>
+                    <br><br>
+                    <p style="font-size:12px;color:grey;">I agree to the <a href="" class="link-a">Terms of Use</a> and
+                        <a href="" class="link-a">Privacy Policy</a></p>
+
+                    <a href="" class='btn btn-dark' style="margin-left: 400px;">Continue to Rocket</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="shadow-sm p-3 mb-5 bg-white rounded">
+                <h5 style="font-weight: 400;">Order Summary</h5>
+                <hr>
+                <p style="color:grey;">Payment Details</p>
+                <div class="payment-detail"
+                    style="margin-left:15px;color:grey;font-weight: 300;border-bottom:1px dotted grey;margin-bottom:12px;">
+                    <p>Subtotal <span style="margin-left:150px;">{{ object.cart.subtotal|floatformat:"0" }} TK.</span>
+                    </p>
+                    <hr>
+                    <p>Shipping <span style="margin-left:147px;">{{ object.shipping_total|floatformat:"0" }} TK.</span>
+                    </p>
+                    <hr>
+                    <p>Total <span style="margin-left:175px;">{{ object.total|floatformat:"0" }} TK.</span></p>
+                    <hr>
+                    <p>Payable Total <span style="margin-left:120px;">{{ object.total|floatformat:"0" }} TK.</span></p>
+                </div>
+                <p style="color:grey;">Your Address</p>
+                <p>Name: <span class="text-muted">{{ object.shipping_address.full_name }}</span></p>
+                <p>Address: <span class="text-muted">({{ object.shipping_address.get_address }})</span></p>
+            </div>
+        </div>
+
+    </div>
+
+
+    {% else %}
+    <div class="shadow p-3 mb-2 bg-white rounded">
+        <span class="" style="font-size:30px;font-weight: 600;color:#F57C00;">Finalize Checkout</span>
+    </div>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <span style="font-size:18px;font-weight:500">Order ID:</span> <span
+                    style="font-size:15px;font-weight:500; color:#F57C00;">{{ object.order_id }}</span><br><br>
+                <span style="font-size:18px;font-weight:500">Shipping Address:</span>
+                ({{ object.shipping_address.get_address }}) <br><br>
+                <span style="font-size:18px;font-weight:500">Payment Method:</span>
+                {{ billing_profile.default_card }}(<a
+                    href="{{ billing_profile.get_payment_method }}?next={{ request.build_absolute_uri }}">Change</a>)<br><br>
+            </div>
+            <div class="col-md-4">
+                <span style="font-size:18px;font-weight:500">Cart total:</span> {{ object.cart.total }}<br><br>
+                <span style="font-size:18px;font-weight:500">Shipping total:</span> {{ object.shipping_total }}<br><br>
+                <span style="font-size:18px;font-weight:500">Total:</span> {{ object.total }} <br><br>
+            </div>
+        </div>
+
+        <span style="font-size:18px;font-weight:500">Cart Item:</span><br><br>
+        <div class="row">
+
+            {% for cart_item in object.cart.cartitem_set.all %}
+            <div class="col-md-2">
+                <a href="{% url 'products:detail' cart_item.product.slug %}"><img
+                        src="{{ cart_item.product.image_main.url }}" alt=""
+                        style="height:150px;width:130px;margin-right:20px;"></a>
+                <span style="font-weight:600;">{{ cart_item.product.title }}</span><br>
+                <span style="font-weight:600;">Price: <span
+                        style="color:#F57C00;">{{ cart_item.product.price }}</span></span><br>
+                <span style="font-weight:600;">Quantity: <span
+                        style="color:#F57C00;">{{ cart_item.quantity }}</span></span>
+            </div>
+            {% endfor %}
+
+        </div><br><br>
+
+        <form action="" method="POST" class="form">{% csrf_token %}
+            <button class="btn btn-warning" style="background: #F57C00;">Finalize</button>
+        </form>
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+    {% endif %}
+</div><br><br>
+{% endblock content %}

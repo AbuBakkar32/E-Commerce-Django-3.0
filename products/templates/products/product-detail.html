@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}{{ block.super }}-Products-Detail{% endblock title %}
+{% block content %}
+<div class="container" style='margin-bottom: 100px;'>
+    <div class="row mt-5">
+        <div class="col-md-5">
+
+            <div class="img-main">
+                {% thumbnail object.image_main "400x400" crop="center" as im %}
+                <img id="detail-img-main" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
+                <div class="topleft">{{ object.name }}</div>
+            </div><br><br>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{{ object.image_1.url }}" data-lightbox="product-images" data-title="{{ object.title }}">
+                        {% thumbnail object.image_1 "100x100" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                            class="rounded-lg border border-info">
+                        {% endthumbnail %}
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ object.image_2.url }}"  data-lightbox="product-images" data-title="{{ object.title }}">
+                        {% thumbnail object.image_2 "100x100" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                            class="rounded-lg border border-info">
+                        {% endthumbnail %}
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ object.image_3.url }}" data-lightbox="product-images" data-title="{{ object.title }}">
+                        {% thumbnail object.image_3 "100x100" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                            class="rounded-lg border border-info">
+                        {% endthumbnail %}
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="" id='sideline'></div>
+
+        <div class="col-md-6 ml-4 " id="details">
+            <h5 class="card-title">{{ object.title|title }}</h5><br>
+            <p class="card-text overflow-auto description">{{ object.description }}</p>
+            <p id='price'>Price:  {{ object.price }} $</p>
+            <p id='brand'>Brand:  {{ object.brand_name.name }}</p>
+            <p id='stock'>Stock:  {{ object.stock }}</p>
+
+            <!-- Cart item -->
+           <span id='price'>Quantity: </span> {% include 'carts/quantity.html' with product_id=object.id quantity=cart_item.quantity color=color %} <br><br>
+            {% include "carts/update.html" with product=object cart=cart cart_item=cart_item %}
+
+    </div>
+    <br>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+    {% for department in category_qs %}
+    <div class="col-12 col-md-3 col-sm-1">
+        <div class="card" style="width: 16rem;">
+            <img src="{{ department.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="card-text category-card-title">{{ department.name }}</p><hr>
+                {% for item in department.subcategory_set.all %}
+                    <a href="{% url 'category:sub-detail' item.pk %}" id="category-product-title">{{ item.name }}</a><br>
+                {% endfor %}
+            </div>
+        </div><br>
+    </div>
+    {% endfor %}
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% load static %}
+
+<!-- bootstrap js link -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- jquery cdn -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- jquery confirm -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<!-- lightbox -->
+<script src="{% static 'static/js/lightbox.min.js' %}"></script>
+
+<!-- stripe -->
+<script src="https://js.stripe.com/v3/"></script>
+
+
+<!-- js render -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.4/jsrender.min.js"></script>
+{% include 'base/js_template.html' %}
+
+<!-- DJANGO SECURE CSRF AJAX -->
+<script src="{% static 'static/js/csrf.ajax.js' %}"></script>
+
+<!--  custom js -->
+<script src="{% static 'static/js/custom.js' %}"></script>
+
+<!-- stripe main js -->
+<script src="{% static 'static/js/stripe.main.js' %}"></script>
+
+

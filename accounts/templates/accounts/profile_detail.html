@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}{{ block.super }}-profile detail {% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="shadow p-3 mb-2 bg-white rounded">Hello,<br>
+                <b style="font-size:20px;color:#F57C00;">{{ request.user.full_name }}</b>
+            </div>
+            {% if request.user.userprofile.profile_img %}
+                <img src="{{ request.user.userprofile.profile_img.url }}"
+                        alt="..." class="img-thumbnail">
+            {% else %}
+            <p>No profile image added.</p>
+            {% endif %}
+
+
+        </div>
+        <div class="col-md-9">
+            <div class="shadow-sm p-3  bg-white rounded">
+                <span>
+                    <h4 style="color:#F57C00;;display:inline;margin-right: 15px;">Personal Information</h4>
+                    <!-- <a href="" class='link-a'>Edit</a> -->
+                </span>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-md-5">
+                        Full Name<br>
+                        <div class="profile-fields">{{ request.user.full_name }}</div>
+                    </div>
+                    <div class="col-md-5">
+                        Email Address:<br>
+                        <div class="profile-fields">{{ request.user.email }}</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-5">
+                        Mobile Number<br>
+                        <div class="profile-fields">{{ request.user.userprofile.mobile_number }}</div>
+                    </div>
+                    
+                </div>
+                
+
+            </div>
+            <div class="shadow-sm p-3  bg-white rounded">
+                <span>
+                    <h4 style="color:#F57C00;;display:inline;margin-right: 15px;">Order Information</h4>
+                </span>
+                <hr>
+                <div class="order">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="shadow-sm p-3 mb-5 bg-white rounded text-center " > <!--id="profile_order_option"-->
+                                <p style='font-size:18px;color:grey;font-weight:600;'>Created Order:
+                                    {{ created_order.all.count }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="shadow-sm p-3 mb-5 bg-white rounded text-center">
+                                <p style='font-size:18px;color:grey;font-weight:600;'>Shipped Order:
+                                    {{ shipped_order.all.count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="shadow-sm p-3 mb-5 bg-white rounded text-center" >
+                                <p style='font-size:18px;color:grey;font-weight:600;'>Paid Order:
+                                    {{ paid_order.all.count }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="shadow-sm p-3 mb-5 bg-white rounded text-center" >
+                                <p style='font-size:18px;color:grey;font-weight:600;'>Cancel Order:
+                                    {{ canceled_order.all.count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shadow-sm p-3  bg-white rounded" id="profile_order_option">
+                <span>
+                    <h4 style="color:#F57C00;;display:inline;margin-right: 15px;">Payment Information</h4>
+                </span>
+                <hr>
+                <div class="shadow-sm p-3 mb-5 bg-white rounded " >
+                    {% if has_card %}
+                    <p style='font-size:18px;color:grey;font-weight:600;'>Your Default Payment Method:<span
+                            style="margin-left: 20px;">{{ billing_obj.default_card }}(<a
+                                href="{{ billing_obj.get_payment_method }}">Change</a>)</span></p>
+                    <br>
+                    {% else %}
+                    <p>Opps! No Card Added</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div><br><br>
+{% endblock content %}

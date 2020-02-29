@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ block.super }}{% endblock title %}
+{% block content %}
+<div class="ml-5 mr-5">
+    <div class="bd-example mt-2">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="5"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="6"></li>
+            </ol>
+            <div class="carousel-inner" style="height:350px; border-radius: 10px;">
+                <div class="carousel-item active" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/baby.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/books.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/cyberspace.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/kitchen.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/mans.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/mobile.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-interval="500">
+                    <img src="{% static 'static/img/home-slide/woman.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+
+
+
+    <div class="" style="margin: 0 auto;text-align:center; margin-top: 10px; margin-bottom: 100px;">
+        <h1 style="color: #F57C00;">Product Category</h1>
+        <p style="color:grey;">You can find your choosing product.</p>
+        <div style="height:2px; width:200px; background:#F57C00;margin:0 auto;"></div>
+
+    </div>
+
+    
+
+
+    <div class="row mt-2">
+        {% for department in category_qs %}
+        <div class="col-md-3 col-sm-2">
+            <div class="card" style="width: 16rem;">
+                <img src="{{ department.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text category-card-title">{{ department.name }}</p>
+                    <hr>
+                    {% if department.subcategory_set.all %}
+                        {% for item in department.subcategory_set.all %}
+                        <a href="{% url 'category:sub-detail' item.pk %}"
+                            id="category-product-title">{{ item.name }}</a><br>
+                        {% endfor %}
+                    {% else %}
+                    <p style="color: grey;">Product subcategory not add.</p>
+                    {% endif %}
+                </div>
+            </div><br>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+
+
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }}-Order-detail{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <div class="shadow-sm p-3  bg-white rounded">
+        <span>
+            <h4 style="color:#F57C00;;display:inline;margin-right: 15px;">Order Detail</h4>
+        </span>
+        <hr>
+        <span style="font-size:20px;">Order ID:</span> <span
+            style="font-size:20px;color: #F57C00">{{ order_obj.order_id }}</span>({{ order_obj.cart.cartitem_set.all.count }}
+        items)
+        <span style="margin-left:40px;font-size:20px;">Payable Amount:</span> <span
+            style="font-size:20px;color:#F57C00;">{{ order_obj.total }}</span>Tk. <br><br>
+
+        <span
+            style="font-size:15px;color:#F57C00; border:2px solid #F57C00; padding:6px; border-radius:5px; ">{{ order_obj.status|upper }}</span><br><br>
+
+        <div class="row">
+            {% for cart_item in order_obj.cart.cartitem_set.all %}
+            <div class="col-md-2">
+                <a href="{% url 'products:detail' cart_item.product.slug %}"><img src="{{ cart_item.product.image_main.url }}" alt=""
+                    style="height:150px;width:130px;margin-right:20px;"></a>
+                <span style="font-weight:600;">{{ cart_item.product.title }}</span><br>
+                <span style="font-weight:600;">Price: <span style="color:#F57C00;">{{ cart_item.product.price }}</span></span><br>
+                <span style="font-weight:600;">Quantity: <span style="color:#F57C00;">{{ cart_item.quantity }}</span></span>
+            </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ block.super }}-About{% endblock title %}
+{% block content %}
+    <div class =''>
+    
+      <section id="" class="py-5 text-dark">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h1 class="display-4">About <span style="color:#F57C00;font-weight:600;font-family: 'Pacifico', cursive;">D</span>epnox</h1>
+              <p class="lead">Work Smarter, Not Harder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      
+    
+      <!-- Team -->
+      <section id="team" class="py-5">
+        <div class="container">
+          <h2 class="text-center" style="font-family: 'ZCOOL XiaoWei', serif;">Meet Our Team</h2>
+          <div style="height:2px;width: 130px;background:#F57C00;margin:0 auto;"></div><br><br>
+          <div class="row text-center">
+            <div class="col-md-4">
+              <img src="{% static 'static/img/about/alamin.jpg' %}" alt="" class="mb-3 about-img">
+              <h4 style="color:#F57C00;font-family: 'Pacifico', cursive;">Md.Al-amin</h4>
+              <p class="text-success">
+                <i class="fas fa-award text-success mb-3"></i>Full-stack Web Developer</p>
+                <p style="color:grey;">alamincmt7418@gmail.com</p>
+            </div>
+    
+            <div class="col-md-4">
+                    <img src="{% static 'static/img/about/sajib.jpg' %}" alt="" class="mb-3 about-img">
+                    <h4 style="color:#F57C00;font-family: 'Pacifico', cursive;">Md.Mostafijur Rahman</h4>
+                    <p class="text-success">
+                      <i class="fas fa-award text-success mb-3"></i>Full-stack Web Developer</p>
+                      <p style="color:grey;">mahmudsajib590@gmail.com</p>
+                  </div>
+    
+                  <div class="col-md-4">
+                        <img src="{% static 'static/img/about/anowar.jpg' %}" alt="" class="mb-3 about-img">
+                        <h4 style="color:#F57C00;font-family: 'Pacifico', cursive;">Md.Anowar Hossain</h4>
+                        <p class="text-success">
+                          <i class="fas fa-award text-success mb-3"></i>Full-stack Web Developer</p>
+                          <p style="color:grey;">anowar300458@gmail.com</p>
+                      </div>
+          </div>
+        </div>
+      </section>
+    </div>
+{% endblock content %}
+

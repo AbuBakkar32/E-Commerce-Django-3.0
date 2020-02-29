@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}{{ block.super }}-Products{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    {% if request.GET.q %}
+    <div class="alert alert-success" role="alert">
+            Search For: <strong>{{ request.GET.q }}</strong>
+        </div>
+    {% endif %}
+    <div class="row">
+        {% for product in query %}
+        <div class="col px-md-3">
+            <div class="card product-list" style="width: 210px; height: 280px;">
+                <div class="content">
+                        {% thumbnail product.image_main "208x170" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                        <div class="card-body">
+                            <h5 class="category-card-title">{{ product.title|title }}</h5><hr>
+                            <p class="card-price">{{ product.price }} Tk.</p>
+                        </div>
+                </div>
+                <div class="cart-button">
+                    <!-- <a href="{% url 'carts:update' %}?product_id={{ product.id }}" class="btn btn-warning" style="background:#fd7e14;color:white;">Add To Cart</a> -->
+                    {% include 'carts/update.html' %}
+                </div>
+                <div class="view-button">
+                    <a href="{% url 'products:detail' slug=product.slug %}" class="btn btn-block btn-dark" style="width:208px;border-radius:0px;">Product Detail</a>
+                </div>
+            </div><br>
+            
+            
+        </div>
+
+
+        
+        {% empty %}
+            <div class="mx-auto">
+                <img src="{% static 'static/img/no-magento-product-found.jpg' %}" alt="">
+            </div>  
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

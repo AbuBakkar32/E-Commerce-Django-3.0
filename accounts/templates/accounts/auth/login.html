@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ block.super }}-Login{% endblock title %}
+{% block content %}
+<div class="content-section container mt-3 " style="margin-bottom:80px;">
+    <div class="card" style="width: 22rem;" id="login-section">
+        <div class="card-body">
+            <form action="" method="POST" id="login-form">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Sign In</legend>
+                    <!-- Messages section -->
+                    <div id="login-error-messages">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-warning" role="alert">
+                            <strong>{{ message.tags|title }}!</strong> {{ message }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {{ form|crispy }}
+                </fieldset>
+
+                <div class="form-group">
+                    <button class="btn btn-info btn-block" id="sign-in-btn">Continue to Sign In</button>
+                    <small class="text-muted ml-2">
+                        <a href="{% url 'password_reset' %}" style='padding:0;margin-left:0px;text-decoration: none;' id='forgot-password' class='link-a'>Forgot Password?</a>
+                    </small>
+                </div>
+                <small><p class="text-muted">By continue to sign in, you agree to Depnox's <a href="{% url 'privacy_policy' %}" class='link-a'>Conditions of Use </a>and <a href="{% url 'privacy_policy' %}" class='link-a'>Privacy Notice</a>.</p></small>
+            </form>
+
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Need an Accouont?<a href="{% url 'accounts:register' %}" id='sign-up' class='link-a'> Sign Up</a>
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

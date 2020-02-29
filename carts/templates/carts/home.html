@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ block.super }}-Cart{% endblock title %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    {% if cart_obj.cartitem_set.all %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card" style="width:50rem; margin-bottom:12px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span style="color:#F57C00; font-size:20px;font-weight: 700;">My Cart
+                                ({{ cart_obj.cartitem_set.all.count }} items)</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span style="color:#F57C00; font-size:20px;font-weight: 700;">Total: {{ cart_obj.total }}
+                                Tk.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="width:50rem;">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th>Product Image</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Product Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_obj.cartitem_set.all %}
+                            <tr>
+                                <!-- <th scope="row">{{ forloop.counter }}</th> -->
+                                <td>
+                                    <a href="{{ item.product.get_absolute_url }}"><img
+                                            src="{{ item.product.image_main.url }}" alt=""
+                                            style="height:100px;width:80px;border-radius:4px;"></a>
+
+                                </td>
+                                <td>
+                                    <a href="{{ item.product.get_absolute_url }}"
+                                        style="color:black;text-decoration: none;font-size: 20px;">{{ item.product.name }}</a><br><br>
+                                    {% include 'carts/remove.html' with product_id=item.product.id cart=cart_obj %}
+                                </td>
+                                <td>{% include 'carts/quantity.html' with product_id=item.product.id quantity=item.quantity %}
+                                </td>
+                                <td>{{ item.product.price }} Tk.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- <div style="position: absolute; right:80px;bottom:12px;">
+                        <a href="{% url 'carts:checkout' %}" class="btn btn-outline-danger" >Continue to Buy</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card" style="width:20rem;">
+                <div class="card-body">
+                    <span style="color:#F57C00; font-size:20px;font-weight: 700;">Checkout Summary</span>
+                    <hr><br>
+
+                    <div style="font-size:15px; font-weight: 700">
+                        <span style="margin-right:80px;color:grey;">Subtotal</span> <span
+                            style="color:grey;">{{ cart_obj.subtotal }} Tk.</span>
+                        <hr>
+                        <span style="margin-right:80px;color:grey;">Shipping</span> <span style="color:grey;">40
+                            Tk.</span>
+                        <hr>
+
+                        <span style="margin-right:110px;color:grey;">Total</span style="color:grey;"> <span
+                            style="color:grey;">{{ cart_obj.total }} Tk.</span>
+                        <hr>
+
+                        <span style="margin-right:50px;">Payable Total</span style="color:grey;">
+                        <span>{{ cart_obj.total|add:40 }} Tk.</span>
+                        <hr><br><br><br>
+                    </div>
+
+                    <a href="{% url 'carts:checkout' %}" class="btn btn-default" style="background:#F57C00;" >Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="image" >
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                    <img style="height:450px;width:500px;" src="{% static 'static/img/cart-not-found.png' %}" alt="">
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

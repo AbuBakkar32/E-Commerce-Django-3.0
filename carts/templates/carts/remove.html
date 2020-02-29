@@ -1,0 +1,9 @@
+<!-- Product remove -->
+<form  action="{% url 'carts:update' %}">
+    {% csrf_token %}
+    <input class='cart-product-id' type="hidden" name="product_id" value="{{ product_id }}">
+    <input type="hidden" name="qty" value="0" >
+    <button type="submit" value="remove" class="btn btn-link" style="padding:0px;">
+        <img style="height:25px;"src="https://img.icons8.com/cute-clipart/64/000000/delete-forever.png">
+    </button>
+</form>
